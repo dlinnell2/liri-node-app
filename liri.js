@@ -10,6 +10,23 @@ var request = require('request');
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 
+var command = process.argv[2];
+
+if (!command) {
+    console.log(`   Sorry! I don't recognize that command. Please enter one of the following.
+    -> my-tweets - displays your last 20 tweets and when created
+    -> spotify-this-song '<type song name here>' - display basic information about the song from spotify
+    -> movie-this '<type movie title here>' - display basic information about the movie from OMDB
+    -> do-what-it-says - executes a command written in an external text file`);
+} else {
+    console.log('nope')
+}
+
+
+
+
+
+
 /* var params = { screen_name: 'dl_bootcamp' };
 client.get('statuses/user_timeline', params, function (error, tweets, response) {
     if (!error) {
@@ -33,7 +50,7 @@ client.get('statuses/user_timeline', params, function (error, tweets, response) 
 
 }); */
 
-var movieName = 'Batman Begins'
+/* var movieName = 'Batman Begins'
 
 var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 
@@ -43,7 +60,7 @@ request(queryUrl, function(error, response, body){
 
         var movie = JSON.parse(body);
 
-        console.log(`Thanks! Here's some basic info on your film!
+        console.log(`           Thanks! Here's some basic info on your film!
         Title: ${movie.Title}
         Year of Release: ${movie.Year}
         IMDB Rating: ${movie.Ratings[0].Value}
@@ -54,5 +71,5 @@ request(queryUrl, function(error, response, body){
         Actors in Film: ${movie.Actors}`);
 
     }
-});
+}); */
 
