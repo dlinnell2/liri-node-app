@@ -14,7 +14,16 @@ var client = new Twitter(keys.twitter);
 
 // taking user input
 var command = process.argv[2];
-var input = process.argv[3];
+var input;
+
+if (process.argv[3].startsWith('\'')){
+    input = process.argv[3];
+} else {
+    var inputArr = process.argv;
+    inputArr.splice(0, 3);
+    input = inputArr.join(' ');
+}
+
 
 function run() {
 
