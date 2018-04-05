@@ -16,12 +16,16 @@ var client = new Twitter(keys.twitter);
 var command = process.argv[2];
 var input;
 
-if (process.argv[3].startsWith('\'')){
-    input = process.argv[3];
-} else {
-    var inputArr = process.argv;
-    inputArr.splice(0, 3);
-    input = inputArr.join(' ');
+if (process.argv[3]) {
+
+    if (process.argv[3].startsWith('\'')) {
+        input = process.argv[3];
+    } else {
+        var inputArr = process.argv;
+        inputArr.splice(0, 3);
+        input = inputArr.join(' ');
+    }
+
 }
 
 
@@ -71,7 +75,7 @@ function run() {
                 var track = songData.name;
                 var previewLink = songData.preview_url;
                 var album = songData.album.name;
-                
+
                 console.log(`You searched for "${track}." That is a song by ${artist} off of the album "${album}."`);
                 if (previewLink === null) {
                     console.log(`Sorry! Unfortunately, that song doesn't have a preview available.`)
