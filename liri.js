@@ -16,6 +16,7 @@ var client = new Twitter(keys.twitter);
 var command = process.argv[2];
 var input;
 
+// Compensating for user not putting quotes around search term
 if (process.argv[3]) {
 
     if (process.argv[3].startsWith('\'')) {
@@ -28,9 +29,10 @@ if (process.argv[3]) {
 
 }
 
-
+// Placing all items within a function, used to make sense of 'do-what-it-says'
 function run() {
 
+    // If user searches for tweets
     switch (command) {
         case 'my-tweets':
             var params = {
@@ -44,13 +46,14 @@ function run() {
                 var tweets = JSON.parse(JSON.stringify(data));
 
                 for (var i in tweets) {
-                    //console.log(tweets[i]);
 
+                    // Grabbing date data and changing to be used by moment
                     var dateArr = tweets[i].created_at.split(' ');
                     dateArr.splice(4, 1);
                     dateArr.splice(0, 1);
                     var newDate = dateArr.join(' ');
 
+                    // Changing date provided by twiiter to (my) local time
                     var newMom = moment(newDate, 'MMM-DD-HH-mm-ss-YYYY').tz("America/Chicago")
                     var tweetDate = newMom.format('MMM DD YYYY');
                     var tweetTime = newMom.format('hh:mm A z');
@@ -59,8 +62,9 @@ function run() {
                 }
 
             });
-            break;
+        break;
 
+        // If user searches spotify
         case 'spotify-this-song':
 
             if (!input) {
@@ -70,6 +74,7 @@ function run() {
             spotify.search({ type: 'track', query: input, limit: 1 }, function (err, data) {
                 if (err) return console.log(err);
 
+                // Grabbing items from data to be used in template literal
                 var songData = JSON.parse(JSON.stringify(data.tracks.items))[0];
                 var artist = songData.album.artists[0].name;
                 var track = songData.name;
@@ -84,8 +89,9 @@ function run() {
                 }
 
             });
-            break;
+        break;
 
+        // If user searches for movie
         case 'movie-this':
 
             if (!input) {
@@ -111,21 +117,22 @@ function run() {
                 Actors in Film: ${movie.Actors}`);
 
             });
-            break;
+        break;
 
+        // If user doesn't enter command or incorrect command
         default:
             console.log(`       Sorry! I don't recognize that command. Please enter one of the following.
         -> 'my-tweets' - displays your last 20 tweets and when created
         -> 'spotify-this-song' '<type song name here>' - display basic information about the song from spotify
         -> 'movie-this' '<type movie title here>' - display basic information about the movie from OMDB
         -> 'do-what-it-says' - executes a command written in an external text file`);
-            break;
+        break;
 
     };
 
 };
 
-
+// Check if user inputs 'do-what-it-say' and adjusts for that
 if (command === 'do-what-it-says') {
     fs.readFile('./random.txt', 'utf8', function (err, data) {
         if (err) return console.log(err);
