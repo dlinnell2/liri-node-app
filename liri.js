@@ -64,7 +64,7 @@ function run() {
         case 'spotify-this-song':
 
             if (!input) {
-                input = 'the sign'
+                input = 'the sign';
             }
 
             spotify.search({ type: 'track', query: input, limit: 1 }, function (err, data) {
@@ -115,10 +115,10 @@ function run() {
 
         default:
             console.log(`       Sorry! I don't recognize that command. Please enter one of the following.
-        -> my-tweets - displays your last 20 tweets and when created
-        -> spotify-this-song '<type song name here>' - display basic information about the song from spotify
-        -> movie-this '<type movie title here>' - display basic information about the movie from OMDB
-        -> do-what-it-says - executes a command written in an external text file`);
+        -> 'my-tweets' - displays your last 20 tweets and when created
+        -> 'spotify-this-song' '<type song name here>' - display basic information about the song from spotify
+        -> 'movie-this' '<type movie title here>' - display basic information about the movie from OMDB
+        -> 'do-what-it-says' - executes a command written in an external text file`);
             break;
 
     };
